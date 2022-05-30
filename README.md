@@ -13,7 +13,7 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
-Contract deployed to: 0x1fE750f623324C88424F22a356Ca4b50375d331A
+Contract deployed to: 0x730040C744bf8b56042A00b7D8973A4aD6181154 \n
 You have to create secret.json = {
   url: get it from moralis speedy node,
   key: metamask private key
