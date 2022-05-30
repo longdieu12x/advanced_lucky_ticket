@@ -13,9 +13,9 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
-Contract deployed to: 0x730040C744bf8b56042A00b7D8973A4aD6181154 \n
-You have to create secret.json = {
+- Contract deployed to: 0x730040C744bf8b56042A00b7D8973A4aD6181154 
+- You have to create secret.json = {
   url: get it from moralis speedy node,
   key: metamask private key
 }
-create env that has your api_key from etherscan
+- Create env that has your api_key from etherscan
