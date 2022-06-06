@@ -12,9 +12,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
  */
 abstract contract IDao is IERC165 {
     enum ProposalState {
-        Pending,
         Active,
-        Canceled,
         Defeated,
         Succeeded,
         Queued,
@@ -172,16 +170,6 @@ abstract contract IDao is IERC165 {
     function getVotes(address account, uint256 blockNumber) public view virtual returns (uint256);
 
     /**
-     * @notice module:reputation
-     * @dev Voting power of an `account` at a specific `blockNumber` given additional encoded parameters.
-     */
-    function getVotesWithParams(
-        address account,
-        uint256 blockNumber,
-        bytes memory params
-    ) public view virtual returns (uint256);
-
-    /**
      * @notice module:voting
      * @dev Returns weither `account` has cast a vote on `proposalId`.
      */
@@ -234,18 +222,6 @@ abstract contract IDao is IERC165 {
     ) public virtual returns (uint256 balance);
 
     /**
-     * @dev Cast a vote with a reason and additional encoded parameters
-     *
-     * Emits a {VoteCast} event.
-     */
-    function castVoteWithReasonAndParams(
-        uint256 proposalId,
-        uint8 support,
-        string calldata reason,
-        bytes memory params
-    ) public virtual returns (uint256 balance);
-
-    /**
      * @dev Cast a vote using the user's cryptographic signature.
      *
      * Emits a {VoteCast} event.
@@ -258,18 +234,4 @@ abstract contract IDao is IERC165 {
         bytes32 s
     ) public virtual returns (uint256 balance);
 
-    /**
-     * @dev Cast a vote with a reason and additional encoded parameters using the user's cryptographic signature.
-     *
-     * Emits a {VoteCast} event.
-     */
-    function castVoteWithReasonAndParamsBySig(
-        uint256 proposalId,
-        uint8 support,
-        string calldata reason,
-        bytes memory params,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) public virtual returns (uint256 balance);
 }

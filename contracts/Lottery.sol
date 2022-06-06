@@ -98,7 +98,7 @@ contract Lottery is Ownable, VRFConsumerBase {
         );
         return randomNumber % mod;
     }
-    function setTicketFee(uint _ticketFee) public onlyOwner {
+    function setTicketFee(uint _ticketFee) public {
         ticketFee = _ticketFee;
     }
     function setPeriod(uint32 _period) public onlyOwner {

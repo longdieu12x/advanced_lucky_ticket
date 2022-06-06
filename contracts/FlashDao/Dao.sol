@@ -163,7 +163,7 @@ abstract contract Dao is Context, ERC165, EIP712, IDao {
         uint256 snapshot = proposalSnapshot(proposalId);
         require(snapshot > 0, "FlashDao: unknown proposal id");
         uint256 deadline = proposalDeadline(proposalId);
-        if (deadline >= block.number) {
+        if (block.number <= deadline && block.number >= snapshot) {
             return ProposalState.Active;
         }
         if (proposalId != _finalProposalId)
@@ -179,6 +179,7 @@ abstract contract Dao is Context, ERC165, EIP712, IDao {
                 return ProposalState.Defeated;
             }
         }
+        
     }
 
     /**
@@ -190,6 +191,9 @@ abstract contract Dao is Context, ERC165, EIP712, IDao {
 
     function votingFinalPeriod() public view virtual returns (uint256) {
         return 1200;
+    }
+    function getBlockNumber() public view returns(uint){
+        return block.number;
     }
 
     /**
