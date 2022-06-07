@@ -44,6 +44,10 @@ contract FlashDao is Dao, DaoCountVotes, DaoVotes, DaoQuorum {
     {
         return super.state(proposalId);
     }
+    
+    function setFirstFinalProposal() public virtual override(Dao) returns(uint256) {
+        return super.setFirstFinalProposal();
+    }
 
     function propose(
         address targets,

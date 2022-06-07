@@ -31,7 +31,7 @@ abstract contract Dao is Context, ERC165, EIP712, IDao {
     string private _name;
 
     mapping(uint256 => ProposalCore) private _proposals;
-    uint256 internal _finalProposalId;
+    uint256 public _finalProposalId;
     uint256[] internal _proposalKeys;
 
     event setFinalProposal(
@@ -80,7 +80,7 @@ abstract contract Dao is Context, ERC165, EIP712, IDao {
     /**
      * @dev set first final proposal when the block start.
      */
-    function setFirstFinalProposal() public virtual {
+    function setFirstFinalProposal() public virtual returns(uint256) {
         uint256 higestRateProposalId = _highestRateFor();
         require(higestRateProposalId != 0, "FlashDao:Queued Empty");
         require(
@@ -163,7 +163,7 @@ abstract contract Dao is Context, ERC165, EIP712, IDao {
         uint256 snapshot = proposalSnapshot(proposalId);
         require(snapshot > 0, "FlashDao: unknown proposal id");
         uint256 deadline = proposalDeadline(proposalId);
-        if (block.number <= deadline && block.number >= snapshot) {
+        if (block.number <= deadline) {
             return ProposalState.Active;
         }
         if (proposalId != _finalProposalId)

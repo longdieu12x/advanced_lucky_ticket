@@ -102,9 +102,9 @@ abstract contract DaoCountVotes is Dao {
         virtual
         override(Dao)
         returns (uint256){
-          uint highestRateProposalId = 0;
+          uint highestRateProposalId = _proposalKeys[0];
           for (uint i = 0; i < _proposalKeys.length; i++){
-            if (proposalForRate(_proposalKeys[i]) > proposalForRate(highestRateProposalId)){
+            if (state(_proposalKeys[i]) == ProposalState.Queued && proposalForRate(_proposalKeys[i]) > proposalForRate(highestRateProposalId)){
               highestRateProposalId = _proposalKeys[i];
             }
           }
@@ -120,7 +120,7 @@ abstract contract DaoCountVotes is Dao {
         virtual
         returns (uint256)
     {
-        return uint256(_proposalVotes[proposalId].forVotes * 100 / (_proposalVotes[proposalId].forVotes + _proposalVotes[proposalId].againstVotes));
+        return _proposalVotes[proposalId].forVotes + _proposalVotes[proposalId].againstVotes == 0 ? 0 : uint256(_proposalVotes[proposalId].forVotes * 100 / (_proposalVotes[proposalId].forVotes + _proposalVotes[proposalId].againstVotes));
     }
 
     function _resetCountVote(uint256 proposalId) public virtual override {
